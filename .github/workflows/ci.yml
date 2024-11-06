@@ -105,7 +105,7 @@ jobs:
       - name: Check plugin.json
         run: |
           docker run --pull=always \
-            -v $PWD/${{ steps.metadata.outputs.archive }}:/archives.zip \
+            -v $PWD/${{ steps.metadata.outputs.archive }}:/archive.zip \
             grafana/plugin-validator-cli /archive.zip
 
       - name: Archive Build
