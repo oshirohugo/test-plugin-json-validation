@@ -20,7 +20,7 @@ on:
 permissions: read-all
 
 jobs:
-  release:
+  test:
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -30,8 +30,8 @@ jobs:
           echo "use-input: ${{ inputs.use-input }}"
           echo "string-input: ${{ inputs.string-input }}"
           echo "use-input && string-input: ${{ inputs.use-input && inputs.string-input }}"
-
-      - name: Print output
-        uses: ./.github/workflows/dummy-action.yml
-        with:
-          input-1: ${{ inputs.use-input && inputs.string-input || 'DUCK' }}
+  another-test:
+    name: Another test
+    uses: ./.github/workflows/dummy-action.yml
+    with:
+      input-1: ${{ inputs.use-input && inputs.string-input || 'DUCK' }}
