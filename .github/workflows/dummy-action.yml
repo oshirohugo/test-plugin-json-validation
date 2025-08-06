@@ -1,0 +1,18 @@
+name: Dummy Action
+
+on:
+  workflow_call:
+    inputs:
+      input-1:
+        description: "This is the first input"
+        required: true
+        default: "default"
+        type: string
+
+jobs:
+  dummy-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dummy step
+        run: |
+          echo "input-1: ${{ inputs.input-1 }}"

@@ -5,6 +5,17 @@ name: Test Actions
 
 on:
   workflow_dispatch:
+    inputs:
+      use-input:
+        description: "Use input"
+        required: true
+        default: false
+        type: boolean
+      string-input:
+        description: "String input"
+        required: true
+        default: "MONKEY"
+        type: string
 
 permissions: read-all
 
@@ -14,14 +25,13 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: grafana/plugin-actions/build-plugin@add-options-to-select-backend-target-arch
-        # with:
-        #   backend-target: build:linux
-        # Uncomment to enable plugin signing
-        # (For more info on how to generate the access policy token see https://grafana.com/developers/plugin-tools/publish-a-plugin/sign-a-plugin#generate-an-access-policy-token)
-        #with:
-        # Make sure to save the token in your repository secrets
-        #policy_token: $
-        # Usage of GRAFANA_API_KEY is deprecated, prefer `policy_token` option above
-        #grafana_token: $
+      - name: Print input
+        run: |
+          echo "use-input: ${{ inputs.use-input }}"
+          echo "string-input: ${{ inputs.string-input }}"
+          echo "use-input && string-input: ${{ inputs.use-input && inputs.string-input }}"
+
+      - name: Print output
+        uses: ./.github/workflows/dummy-action.yml
+        with:
+          input-1: ${{ inputs.use-input && inputs.string-input || 'DUCK' }}
